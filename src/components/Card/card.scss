@@ -1,0 +1,32 @@
+.card {
+	width: min(200px, 30%);
+	padding: 10px 20px;
+	display: flex;
+	flex-direction: column;
+	border-radius: 5px;
+	margin: 20px;
+	text-align: center;
+	font-size: 2em;
+	border: 1px solid black;
+	&:hover {
+		box-shadow: 2px 8px 20px grey;
+		transition: box-shadow 400ms ease-in-out;
+	}
+
+	.options {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		margin-top: 20px;
+		& > * {
+			cursor: pointer;
+		}
+
+		.icon:hover {
+			path {
+				fill: blue;
+				transition: fill 200ms ease;
+			}
+		}
+	}
+}
