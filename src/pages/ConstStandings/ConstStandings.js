@@ -9,99 +9,80 @@ import {
 	TableRow,
 	Skeleton,
 } from '@mui/material';
+import { Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { randomHexColorCode } from '../../utils';
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 function ConstStandings() {
 	const { year } = useParams();
-	const data = [
-		{
-			position: 0,
-			points: '0',
-			team_id: 33121,
-			team_name: 'Red Bull',
-			season: 2022,
-		},
-		{
-			position: 0,
-			points: '0',
-			team_id: 56525,
-			team_name: 'McLaren',
-			season: 2022,
-		},
-		{
-			position: 0,
-			points: '0',
-			team_id: 183197,
-			team_name: 'Ferrari',
-			season: 2022,
-		},
-		{
-			position: 0,
-			points: '0',
-			team_id: 31205,
-			team_name: 'Alpine',
-			season: 2022,
-		},
-		{
-			position: 0,
-			points: '0',
-			team_id: 58685,
-			team_name: 'Mercedes',
-			season: 2022,
-		},
-		{
-			position: 0,
-			points: '0',
-			team_id: 71583,
-			team_name: 'Alfa Romeo Racing',
-			season: 2022,
-		},
-		{
-			position: 0,
-			points: '0',
-			team_id: 65311,
-			team_name: 'Aston Martin',
-			season: 2022,
-		},
-		{
-			position: 0,
-			points: '0',
-			team_id: 163637,
-			team_name: 'Williams',
-			season: 2022,
-		},
-		{
-			position: 0,
-			points: '0',
-			team_id: 199493,
-			team_name: 'AlphaTauri',
-			season: 2022,
-		},
-		{
-			position: 0,
-			points: '0',
-			team_id: 143585,
-			team_name: 'Haas',
-			season: 2022,
-		},
-	];
-	// 	const { data, isLoading, error } = useFetch(
-	// 		`/constructors/standings/${year}`
-	// 	);
-	// 	if (isLoading) return (<>
-	// 	<Skeleton height={'30vh'} />
-	// 	<Skeleton animation='wave' height={'30vh'} />
-	// 	<Skeleton animation={false} height={'30vh'} />
-	// </>);
-	// 	if (error) {
-	// 		return <h1>{error}</h1>;
-	// 	}
-	// 	console.log(data);
 
-	// 	if (!data) {
-	// 		return <p>No data found</p>;
-	// 	}
+	const { data, isLoading, error } = useFetch(
+		`/constructors/standings/${year}`
+	);
+	if (isLoading)
+		return (
+			<>
+				<Skeleton height={'30vh'} />
+				<Skeleton animation='wave' height={'30vh'} />
+				<Skeleton animation={false} height={'30vh'} />
+			</>
+		);
+	if (error) {
+		return <h1>{error}</h1>;
+	}
+	console.log(data);
+
+	if (!data) {
+		return <p>No data found</p>;
+	}
+
+	const colors = [
+		'#00D2BE',
+		'#0600EF',
+		'#DC0000',
+		'#FF8700',
+		'#0090FF',
+		'#2B4562',
+		'#006F62',
+		'#005AFF',
+		'#900000',
+		'#FFFFFF',
+	];
+	const dat = {
+		labels: data.map((item) => item.team_name),
+		datasets: [
+			{
+				label: '# of Votes',
+				data: data.map((item) => +item.points),
+				backgroundColor: colors,
+				borderColor: colors,
+				borderWidth: 1,
+			},
+		],
+	};
 	return (
 		<div>
+			<h1
+				style={{
+					textAlign: 'center',
+					backgroundColor: 'white',
+					color: 'var(--primary-color)',
+					width: '100vw',
+				}}
+			>
+				{year}
+			</h1>
+			<Pie
+				data={dat}
+				style={{
+					maxWidth: 'min(90vw,500px)',
+					maxHeight: 'min(90vh,500px)',
+					paddingBottom: '20px',
+					marginLeft: 'auto',
+					marginRight: 'auto',
+				}}
+			/>
 			<Table
 				stickyHeader={true}
 				style={{ backgroundColor: 'white', color: 'white' }}
