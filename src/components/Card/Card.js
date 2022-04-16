@@ -3,7 +3,6 @@ import './card.scss';
 import { GiFullMotorcycleHelmet } from 'react-icons/gi';
 import { FaFlagCheckered, FaTrophy } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { Button, Tooltip } from '@mui/material';
 function Card({ year }) {
 	const navigate = useNavigate();
 	const onClickRaces = () => {

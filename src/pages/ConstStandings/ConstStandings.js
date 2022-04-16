@@ -11,7 +11,6 @@ import {
 } from '@mui/material';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { randomHexColorCode } from '../../utils';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 function ConstStandings() {
